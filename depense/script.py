@@ -16,7 +16,7 @@ def print_header(title, max_length=0):
     length = max(len(title), max_length)
 
     print(f"\n+{'-'*length}+")
-    print(f'|{title}{(max_length-len(title))*' '}|')
+    print(f'|{title}{(max_length-len(title))*' '}|') #TODO: Center the title [maybe :( ]
     print(f"+{'-'*length}+")
 
 def print_footer(length):
@@ -35,42 +35,43 @@ def get_category():
     show_category()
     
     while True :
-        c = int(input(f"Veuillez choisir une option (entre 0 et {len(CATEGORIES)-1}): "))
-        if c >= 0 and c < len(CATEGORIES):
-            return CATEGORIES[c]
-        else:
-            print("Mauvais choix")
+        try:
+            c = int(input(f"Veuillez choisir une option (entre 0 et {len(CATEGORIES)-1}): "))
+            if c >= 0 and c < len(CATEGORIES):
+                return CATEGORIES[c]
+        except ValueError:
+            pass
 
 def get_amount():
     while True:
-        amount = float(input('Veuillez saisir le montant : '))
-        if amount<=0:
-            print('Montant invalide')
-        else:
-            return amount
+        try:
+            amount = float(input("Veuillez entrer le montant de la dépense : "))
+            if amount > 0:
+                return amount
+        except ValueError:
+            pass
+        print("Montant invalide")
     
 def get_description():
     while True:
         desc = input('Veuillez fournir une description (ex: "Achat a BelMart"): ').strip().capitalize()
         if desc :
             return desc 
+        
+def get_label_length():
+    l = [max(len(str(expense[i])) for expense in EXPENSES) for i in range(3)]
+    return max(l)
 
 def show_expenses():
     TITLE = 'Liste des dépenses'.upper()
 
-    # We iterate throught expenses and store the length of each element inside a list
-    # then get the max length for each element to format the header
-    l = [max(len(str(expense[i])) for expense in EXPENSES) for i in range(3)]
-    # now we simply get the max length from the list
-    max_length= max(l)
-    # get the max length between the title and the max_length
-    max_length = max(max_length, len(TITLE)) + 15 # adding spaces for labels Description : etc.
+    max_length = max(get_label_length(), len(TITLE)) + 22 # adding extra spaces to mitigate label lengths and tabulations Ex: \tDescription :
 
     if EXPENSES:
         print_header(TITLE, max_length)
         for idx, expense in enumerate(EXPENSES):
-            print(f'Dépense {idx+1}) :')
-            print(f'Description : {expense[0]}\nCategorie : {expense[1]}\nDepense : {expense[2]}')
+            print(f'[Dépense {idx+1}]')
+            print(f'\tDescription : {expense[0]}\n\tCategorie : {expense[1]}\n\tMontant : {expense[2]}')
         print_footer(max_length)
     else:
         print('\n=----Aucune dépense!----=')
