@@ -8,7 +8,7 @@ Veuillez choisir une option :
 3. Quitter
 """
 
-EXPENSES = [('Achat a belmart', 'Autre', 0.5), ('Achat a belmart dans une station', 'Autre', 0.5)]
+EXPENSES = []
 
 CATEGORIES = ('Alimentation', 'Logement', 'Loisirs', 'Santé', 'Transport', 'Autre')
 
