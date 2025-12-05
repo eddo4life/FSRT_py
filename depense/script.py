@@ -8,18 +8,19 @@ Veuillez choisir une option :
 3. Quitter
 """
 
-EXPENSES = []
+EXPENSES = [('Achat a belmart', 'Autre', 0.5), ('Achat a belmart dans une station', 'Autre', 0.5)]
 
 CATEGORIES = ('Alimentation', 'Logement', 'Loisirs', 'Santé', 'Transport', 'Autre')
 
-def print_header(title):
-    length = len(title)
+def print_header(title, max_length=0):
+    length = max(len(title), max_length)
+
     print(f"\n+{'-'*length}+")
-    print(f'|{title}|')
+    print(f'|{title}{(max_length-len(title))*' '}|')
     print(f"+{'-'*length}+")
 
-def print_footer(title):
-    print(f"+{'-'*len(title)}+\n")
+def print_footer(length):
+    print(f"+{'-'*length}+\n")
 
 
 def show_category():
@@ -28,7 +29,7 @@ def show_category():
 
     for idx, cat in enumerate(CATEGORIES):
         print(f'{idx}. {cat}')
-    print_footer(TITLE)
+    print_footer(len(TITLE))
 
 def get_category():
     show_category()
@@ -53,15 +54,24 @@ def get_description():
         desc = input('Veuillez fournir une description (ex: "Achat a BelMart"): ').strip().capitalize()
         if desc :
             return desc 
-        
+
 def show_expenses():
     TITLE = 'Liste des dépenses'.upper()
+
+    # We iterate throught expenses and store the length of each element inside a list
+    # then get the max length for each element to format the header
+    l = [max(len(str(expense[i])) for expense in EXPENSES) for i in range(3)]
+    # now we simply get the max length from the list
+    max_length= max(l)
+    # get the max length between the title and the max_length
+    max_length = max(max_length, len(TITLE)) + 15 # adding spaces for labels Description : etc.
+
     if EXPENSES:
-        print_header(TITLE)
+        print_header(TITLE, max_length)
         for idx, expense in enumerate(EXPENSES):
             print(f'Dépense {idx+1}) :')
             print(f'Description : {expense[0]}\nCategorie : {expense[1]}\nDepense : {expense[2]}')
-        print_footer(TITLE)
+        print_footer(max_length)
     else:
         print('\n=----Aucune dépense!----=')
     
