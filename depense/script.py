@@ -1,5 +1,6 @@
 MENU = """
-MINI GESTIONNAIRE DE DÉPENSES PERSONNELLES
+       MENU PRINCIPAL
+-----------------------------
 Veuillez choisir une option :
 
 1. Ajouter une dépense
@@ -65,19 +66,22 @@ def show_expenses():
         print('\n=----Aucune dépense!----=')
     
 
-# show_category()
+def menu():
+    while True:
+        print(MENU)
+        choix = input("Entrez votre choix (1-3) : ")
+        if choix == '1':
+            expense = (get_description(), get_category(), get_amount())
+            EXPENSES.append(expense)
+            print(f'Enregistrement\n\t{expense}\nréussi')
+        elif choix == '2':
+            show_expenses()
+        elif choix == '3':
+            print("Au revoir!")
+            break
+        else:
+            print("Choix invalide, veuillez réessayer.\n")
 
-while True:
-    print(MENU)
-    choix = input("Entrez votre choix (1-3) : ")
-    if choix == '1':
-        expense = (get_description(), get_category(), get_amount())
-        EXPENSES.append(expense)
-        print(f'Enregistrement\n\t{expense}\nréussi')
-    elif choix == '2':
-        show_expenses()
-    elif choix == '3':
-        print("Au revoir!")
-        break
-    else:
-        print("Choix invalide, veuillez réessayer.\n")
+if __name__ == "__main__":
+    print('MINI GESTIONNAIRE DE DÉPENSES PERSONNELLES')
+    menu()
