@@ -1,3 +1,5 @@
+# Auteur: THEODORIS Boaz Eddy Cadet
+
 MENU = """
        MENU PRINCIPAL
 -----------------------------
