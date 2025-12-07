@@ -61,6 +61,8 @@ def get_description():
             return desc 
         
 def get_label_length():
+    if not EXPENSES:
+        return 0
     l = [max(len(str(expense[i])) for expense in EXPENSES) for i in range(3)]
     return max(l)
 
